@@ -1,5 +1,15 @@
+using APIDevelopment.Interfaces;
+using APIDevelopment.Services;
+using Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Register EmpContext with DI container and configure database connection
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+builder.Services.AddScoped<IUserDetails, UserDetailsServices>();
 // Add services to the container.
 
 builder.Services.AddControllers();
